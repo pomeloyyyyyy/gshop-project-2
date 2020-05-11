@@ -2,6 +2,7 @@ module.exports = {
   lintOnSave: false, // 关闭eslint规则检查
 
   devServer: {
+    open: true,
     proxy: {
       // 配置代理
       "/api": {

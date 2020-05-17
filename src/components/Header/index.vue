@@ -5,15 +5,22 @@
       <div class="container">
         <div class="loginList">
           <p>尚品汇欢迎您！</p>
-          <p>
+          
+          <p v-if="userInfo.name">
+            <span>{{userInfo.nickName}}</span>
+            &nbsp;&nbsp;&nbsp;
+            <a href="javascript:" @click="logout">登出</a>
+          </p>
+
+          <p v-else>
             <span>请</span>
             <router-link to="/login">登录</router-link>
             <router-link to="/register" class="register">免费注册</router-link>
           </p>
         </div>
         <div class="typeList">
-          <a href="###">我的订单</a>
-          <a href="###">我的购物车</a>
+          <router-link to="/center/myorder">我的订单</router-link>
+          <router-link to="/shopcart">我的购物车</router-link>
           <a href="###">我的尚品汇</a>
           <a href="###">尚品汇会员</a>
           <a href="###">企业采购</a>
@@ -50,6 +57,7 @@
 
 
 <script>
+  import {mapState} from 'vuex'
   export default {
     name: 'Header',
 
@@ -66,7 +74,19 @@
       })
     },
 
+    computed: {
+      ...mapState({
+        userInfo: state => state.user.userInfo
+      })
+    },
+
     methods: {
+      logout () {
+        if (window.confirm('确定退出吗?')) {
+          this.$store.dispatch('logout')
+        }
+      },
+
       search () {
         // 编程式路由导航(跳转)
           // 字符串模式
